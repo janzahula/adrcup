@@ -1,0 +1,45 @@
+{block content}
+
+
+
+
+{form taskForm}
+
+<!-- Jednoduché vykreslení chyb -->
+<ul class="errors" n:if="$form->hasErrors()">
+    <li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<table>
+    <tr class="required">
+        <th>{label title_cz /}</th>
+        <td>{input title_cz}</td>
+    </tr>
+
+    <tr class="required">
+        <th>{label title_en /}</th>
+        <td>{input title_en}</td>
+    </tr>
+</table>
+<div class="required">
+    <br />
+    <p><b> Text česky</b></p>
+     
+    {input text_cz}
+</div>
+<div class="required">
+<br />
+<p><b> Text anglicky</b></p>
+
+       {input text_en}
+</div>
+<br />
+ 
+<div >
+    
+    {input create}
+    
+</div>
+
+
+{/form}
+{/block}
