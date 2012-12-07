@@ -1,22 +1,24 @@
 <?php
-
+ 
 /**
  * Description of Json
  *
  * @author jan
  */
-class JsonPresenter extends BasePresenter {
+include 'ChromePhp.php';
+class JsonPresenter extends AdminModule\BasePresenter {
 
     private $article;
     private $galerie;
 
-    public function inject(Adrenalincup\Article $article, Adrenalincup\Galerie $galerie) {
+    public function inject(\Adrenalincup\Article $article, \Adrenalincup\Galerie $galerie) {
         $this->article = $article;
         $this->galerie = $galerie;
     }
 
     protected function startup() {
         parent::startup();
+        \ChromePhp::log("startup");
     }
 
     public function actionDefault() {
@@ -24,7 +26,6 @@ class JsonPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-
         $params = array(
             'operation' => $this->getParam('operation'),
             'id' => $this->getParam('id'),
@@ -37,6 +38,7 @@ class JsonPresenter extends BasePresenter {
             'type' => $this->getParam('type'),
             'copy' => $this->getParam('copy'),
         );
+         
         $container = $this->presenter->context;
         $httpResponse = $container->httpResponse;
         $httpResponse->setContentType('application/json', 'UTF-8');

@@ -7,7 +7,7 @@ use Nette\Application\UI,
 /**
  * Sign in/out presenters.
  */
-class SignPresenter extends BasePresenter
+class SignPresenter extends Nette\Application\UI\Presenter
 {
 
 
@@ -18,15 +18,15 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new UI\Form;
-		$form->addText('username', 'Username:')
-			->setRequired('Please provide a username.');
+		$form->addText('username', 'Uživatelské jméno:')
+			->setRequired('Zadejte své uživatelské jméno.');
 
-		$form->addPassword('password', 'Password:')
-			->setRequired('Please provide a password.');
+		$form->addPassword('password', 'Heslo:')
+			->setRequired('Zadejte heslo');
 
-		$form->addCheckbox('remember', 'Remember me on this computer');
+		$form->addCheckbox('remember', 'Zapamatovat.');
 
-		$form->addSubmit('send', 'Sign in');
+		$form->addSubmit('send', 'Přihlásit');
 
 		$form->onSuccess[] = $this->signInFormSubmitted;
 		return $form;
@@ -44,7 +44,7 @@ class SignPresenter extends BasePresenter
 				$this->getUser()->setExpiration('+ 20 minutes', TRUE);
 			}
 			$this->getUser()->login($values->username, $values->password);
-			$this->redirect('Homepage:');
+			$this->redirect('Admin:Homepage:');
 
 		} catch (NS\AuthenticationException $e) {
 			$form->addError($e->getMessage());
@@ -56,7 +56,7 @@ class SignPresenter extends BasePresenter
 	public function actionOut()
 	{
 		$this->getUser()->logout();
-		$this->flashMessage('You have been signed out.');
+		$this->flashMessage('Byl jste odhlášen.');
 		$this->redirect('in');
 	}
 

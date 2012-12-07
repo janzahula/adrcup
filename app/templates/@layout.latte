@@ -33,25 +33,36 @@
         <script type="text/javascript" src="{$basePath}/js/jstree/jquery.jstree.js"></script>
         <script type="text/javascript" src="{$basePath}/js/jquery-ui-min.js"></script>
         <script type="text/javascript" src="{$basePath}/js/jquery.zclip.min.js"></script>
-        
+
         <link type="text/css" rel="stylesheet" href="{$basePath}/css/jstree/syntax/!style.css"/>
         <link type="text/css" rel="stylesheet" href="{$basePath}/css/jstree/!style.css"/>
         <script type="text/javascript" src="{$basePath}/css/jstree/syntax/!script.js"></script>
         <script src="{$baseUrl}/js/fileuploader.js" type="text/javascript"></script>
+<!--        <script type="text/javascript">
+        $(document).ready(function() {
+            
+              $(".menu-item").each(function() {   
+ 
+                if (this.href == window.location.href) {
+                    
+                    $(this).parent().attr("id", "selected");
+                }
+            });
+        });
+            
+        
+        </script>-->
         <script>  
-          
-            
         function loadPhotos(){            
-            
             var id = $("#hidden_id").text(); 
             $("body").addClass("loading");
             $("#photos-to-upload").text(" ");
-            $.get('/homepage/reloadPhotos?article_id='+id, function(data) {                
+            $.get('/administrace/homepage/reloadPhotos?article_id='+id, function(data) {                
                 for(var i in data.photos){
                      $("#photos-to-upload")                      
                      .append('<div class="image_wrapper" id="wrapper_'+data.photos[i]+'">\n\
                                 <div id="copy_'+data.photos[i]+'">\n\
-                                    <img src=images/galerie/'+id+'/140'+data.photos[i]+' class="pic" id="pic_'+i+'"/>\n\
+                                    <img src=/images/galerie/'+id+'/140'+data.photos[i]+' class="pic" id="pic_'+i+'"/>\n\
                                 </div>\n\
                                 <div class="transbox" id="transbox_'+i+'">\n\
                                 <a href="#"  title="Odstranit">\n\
@@ -91,7 +102,7 @@
                                   $.ajax({
                                             async : false,
                                             type: 'POST',
-                                            url: '/json/deleteImage',
+                                            url: '/administrace/json/deleteImage',
                                             data : { 
                                                     "image_id" : id
                                                     }, 
@@ -118,7 +129,7 @@
              
         function selectFileInTree(id){
             $("#content").css("visibility", "visible");
-            $.get('/homepage/getByTreeId?treeId='+id, function(data) {
+            $.get('/administrace/homepage/getByTreeId?treeId='+id, function(data) {
                             $("#frmtaskForm-title_cz").val(data.title_cz);
                             $("#frmtaskForm-title_en").val(data.title_en);
                             $("#frmtaskForm-text_cz").val(data.text_cz);
@@ -137,6 +148,16 @@
         }            
         $(document).ready(function() {
             $("#frmform-odeslat").attr("disabled", "disabled");
+            $(".menu-item").each(function() {   
+ 
+                if (this.href == window.location.href) {
+                    
+                    $(this).parent().attr("id", "selected");
+                }
+            });
+            $("#logout-button").click(function(){
+                window.location.href = "/administrace/homepage/logout";
+            });
         });
         function createUploader(){            
             var uploader = new qq.FileUploader({
@@ -159,369 +180,23 @@
     <body>
 
     <!--<script> document.body.className+=' js' </script>-->
-        <div id="demo_body">
-            <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+        <div id="dhead">
 
-
-
-            <div id="container">
-
-                <h1 id="dhead">jsTree v.1.0</h1>
-                <div id="content">
-                    <input type="button" value="Nahrát fotografie" class="button upload" id="open-file-upload-dialog" />
-
-                    <div id="photos-to-upload">
-
-                    </div>
-
-                    <hr />
-            {include #content}
-
-                </div>
-
-                <div id="description">
-                    <div id="mmenu" style="height: 130px;">
-                        <input type="button" id="add_folder" value="Nová složka" class="button add" />
-                        <input type="button" id="add_default" value="Nový soubor" class="button add" />
-                        <input type="button" id="rename" value="Přejmenovat" class="button edit" />
-                        <input type="button" id="remove" value="Odstranit" class="button delete"/>
-
-                    </div>
-
-<!-- the tree container (notice NOT an UL node) -->
-
-
-                    <div id="demo" class="demo"  ></div>
-
-                </div>
-
+            <div id="main-menu">
+                <div class="menu-item-wrapper"><a class="menu-item" href="/administrace/">Obsah</a></div>
+                <div class="menu-item-wrapper"><a class="menu-item" href="/administrace/registrace/">Registrace</a></div>
+                <div class="menu-item-wrapper"><a class="menu-item" href="/administrace/eshop/">eShop</a></div>
+                <div id="main-header">
+                    {if $user->isLoggedIn()}
+                    <img src="/images/user_lock.png" width="30"> {$user->identity->name}
+                    <input type="button" value="Odhlásit" class="button edit" id="logout-button"/>
+                    {/if}
+                 
             </div>
-
-            <script type="text/javascript">
-            $(function () {
-            $("#demo")
-                    .bind("before.jstree", function (e, data) {
-                            $("#alog").append(data.func + "<br />");
-                    })
-                    .jstree({ 
-                            // List of active plugins
-                            "plugins" : [ 
-                                    "themes","json_data","ui","crrm","cookies","dnd","search","types" 
-                            ],
-
-                            // I usually configure the plugin that handles the data first
-                            // This example uses JSON as it is most common
-                            "json_data" : { 
-                                    // This tree is ajax enabled - as this is most common, and maybe a bit more complex
-                                    // All the options are almost the same as jQuery's AJAX (read the docs)
-                                    "ajax" : {
-                                            // the URL to fetch the data
-                                            "url" : "/json",
-                                            // the `data` function is executed in the instance's scope
-                                            // the parameter is the node being loaded 
-                                            // (may be -1, 0, or undefined when loading the root nodes)
-                                            "data" : function (n) { 
-                                                    // the result is fed to the AJAX request `data` option
-                                                    return { 
-                                                            "operation" : "get_children", 
-                                                            "id" : n.attr ? n.attr("id").replace("node_","") : 1 
-                                                    }; 
-                                            }
-                                    }
-                            },
-                            // Configuring the search plugin
-                        
-                            // Using types - most of the time this is an overkill
-                            // read the docs carefully to decide whether you need types
-                            "types" : {
-                                    // I set both options to -2, as I do not need depth and children count checking
-                                    // Those two checks may slow jstree a lot, so use only when needed
-                                    "max_depth" : 4,
-                                    "max_children" : -2,
-                                    // I want only `drive` nodes to be root nodes 
-                                    // This will prevent moving or creating any other type as a root node
-                                    "valid_children" : [ "drive" ],
-                                    "types" : {
-                                            // The default type
-                                            "default" : {
-                                                    // I want this type to have no children (so only leaf nodes)
-                                                    // In my case - those are files
-                                                    "valid_children" : "none",
-                                                    // If we specify an icon for the default type it WILL OVERRIDE the theme icons
-                                                    "icon" : {
-                                                            "image" : "/images/file.png"
-                                                    }
-                                            },
-                                            // The `folder` type
-                                            "folder" : {
-                                                    // can have files and other folders inside of it, but NOT `drive` nodes
-                                                    "valid_children" : [ "default", "folder" ],
-                                                    "icon" : {
-                                                            "image" : "/images/folder.png"
-                                                    }
-                                            },
-                                            // The `drive` nodes 
-                                            "drive" : {
-                                                    // can have files and folders inside, but NOT other `drive` nodes
-                                                    "valid_children" : [ "default", "folder" ],
-                                                    "icon" : {
-                                                            "image" : "/images/root.png"
-                                                    },
-                                                    // those prevent the functions with the same name to be used on `drive` nodes
-                                                    // internally the `before` event is used
-                                                    "start_drag" : false,
-                                                    "move_node" : false,
-                                                    "delete_node" : false,
-                                                    "remove" : false
-                                            }
-                                    }
-                            },
-                            // UI & core - the nodes to initially select and open will be overwritten by the cookie plugin
-
-                            // the UI plugin - it handles selecting/deselecting/hovering nodes
-                            "ui" : {
-                                    // this makes the node with ID node_4 selected onload
-                                    "initially_select" : [ "node_4" ]
-                            },
-                            // the core plugin - not many options here
-                            "core" : { 
-                                    // just open those two nodes up
-                                    // as this is an AJAX enabled tree, both will be downloaded from the server
-                                    "initially_open" : [ "node_2" , "node_3" ] 
-                            }
-                    })
-                    .bind("create.jstree", function (e, data) {
-                            $.post(
-                                    "/json", 
-                                    { 
-                                            "operation" : "create_node", 
-                                            "id" : data.rslt.parent.attr("id").replace("node_",""), 
-                                            "position" : data.rslt.position,
-                                            "title" : data.rslt.name,
-                                            "type" : data.rslt.obj.attr("rel")
-                                    }, 
-                                    function (r) {
-                                            if(r.status) {
-                                                 
-                                                    $(data.rslt.obj).attr("id", "node_" + r.id);
-                                                    if(data.rslt.obj.attr("rel") == "default"){                                                                                                             
-                                                       $.ajax({
-                                                            async : false,
-                                                            type: 'POST',
-                                                            url: '/json/createFile',
-                                                            data : { 
-                                                                    "node_id" : data.rslt.obj.attr("id").replace("node_",""),
-                                                                    "title" : data.rslt.name
-                                                            }
-                                                        });                                                        
-                                                    }
-                                                    
-                                            }
-                                            else {
-                                                    $.jstree.rollback(data.rlbk);
-                                            }
-                                    }
-                            );
-                    })                                      
-                                        
-                    .bind("remove.jstree", function (e, data) {    
-                         
-                        data.rslt.obj.each(function () {
-                                    $.ajax({
-                                            async : false,
-                                            type: 'POST',
-                                            url: "/json",
-                                            data : { 
-                                                    "operation" : "remove_node", 
-                                                    "id" : this.id.replace("node_",""),
-                                                    "type" : data.rslt.obj.attr("rel")
-                                            }, 
-                                            success : function (r) {
-                                                    if(!r.status) {
-                                                            data.inst.refresh();
-                                                    }
-                                            }
-                                    });
-                            });                            
-                    })
-                    .bind("rename.jstree", function (e, data) {
-                            $.post(
-                                    "/json", 
-                                    { 
-                                            "operation" : "rename_node", 
-                                            "id" : data.rslt.obj.attr("id").replace("node_",""),
-                                            "title" : data.rslt.new_name
-                                    }, 
-                                    function (r) {
-                                            $.ajax({
-                                                async : false,
-                                                type: 'POST',
-                                                url: '/json/renameNode',
-                                                data : { 
-                                                        "node_id" : data.rslt.obj.attr("id").replace("node_",""),
-                                                        "title" : data.rslt.new_name
-                                                }
-                                            });
-                                            $("#frmtaskForm-title_cz").val(data.rslt.new_name);
-                                            if(!r.status) {
-                                                    $.jstree.rollback(data.rlbk);
-                                            }
-                                    }
-                            );
-                    })
-                    .bind("move_node.jstree", function (e, data) {
-                            data.rslt.o.each(function (i) {
-                                    $.ajax({
-                                            async : false,
-                                            type: 'POST',
-                                            url: "/json",
-                                            data : { 
-                                                    "operation" : "move_node", 
-                                                    "id" : $(this).attr("id").replace("node_",""), 
-                                                    "ref" : data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_",""), 
-                                                    "position" : data.rslt.cp + i,
-                                                    "title" : data.rslt.name,
-                                                    "copy" : data.rslt.cy ? 1 : 0
-                                            },
-                                            success : function (r) {
-                                                    if(!r.status) {
-                                                            $.jstree.rollback(data.rlbk);
-                                                    }
-                                                    else {
-                                                            $(data.rslt.oc).attr("id", "node_" + r.id);
-                                                            if(data.rslt.cy && $(data.rslt.oc).children("UL").length) {
-                                                                    data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-                                                            }
-                                                    }
-                                                    $("#analyze").click();
-                                            }
-                                    });
-                            });
-                    })
-                    .bind("select_node.jstree", function (event, data) {
-                        if(data.rslt.obj.attr("rel") == "default"){
-                            selectFileInTree(data.rslt.obj.attr("id").replace("node_",""));
-                        }else if (data.rslt.obj.attr("rel") == "folder" || data.rslt.obj.attr("rel") == "drive"){
-                            selectFolderInTree();
-                        }
-                        
-                    });                                          
-            });
-            </script>
-            <script type="text/javascript" >
-            // Code for the menu buttons
-            $(function () { 
-                
-                    $("#mmenu input").click(function () {
-                            switch(this.id) {
-                                    case "add_default":
-                                    case "add_folder":
-                                            $("#demo").jstree("create", null, "last", { "attr" : { "rel" : this.id.toString().replace("add_", "") } });
-                                            break;
-                                    case "search":
-                                            $("#demo").jstree("search", document.getElementById("text").value);
-                                            break;
-                                    case "text": break;
-                                    case "remove" :
-                                            $("#dialog-confirm").css("visibility",  "visible");
-                                            $( "#dialog-confirm" ).dialog({
-                                                   resizable: false,
-                                                   show : 'fade',
-                                                   hide : 'fade',   
-                                                   height:180,
-                                                   modal: true,
-                                                   buttons: {
-                                                       Cancel: function() {
-                                                           $( this ).dialog( "close" );
-                                                       },
-                                                       "Ostranit": function() {
-                                                           $("#demo").jstree("remove");
-                                                           $( this ).dialog( "close" );
-                                                       }
-                                                   }
-                                                   });
-                                                   
-                                            break;
-                                    default:
-                                            $("#demo").jstree(this.id);
-                                            break;
-                            }
-                    });
- 
-            });
+            </div>
             
-             
-            </script>
-
-            <script type="text/javascript">
-                                $("#open-file-upload-dialog").click(function(){
-                                    $( "#file-uploader-demo1" ).css("visibility", "visible");
-                                      $( "#file-uploader-demo1" ).dialog({
-                                           resizable: false,
-                                           show : 'fade',
-                                           width: 303,    
-                                           height:500,
-                                           modal: true,
-                                           buttons: {
-                                               "Uložit": function(data) {                                                                                               
-                                                   var id = $("#hidden_id").text();                                                 
-                                                    $("body").addClass("loading");
-                                                   $.get('/homepage/saveGalleryForId?article_id='+id, function() {})
-                                                   .complete(function() { 
-                                                       loadPhotos();
-                                                        
-                                                   });
-                                                   ;
-                                                   
-                                                   $(".qq-upload-list").text(" ");
-                                                   $( this ).dialog( "close" );
-                                                    
-                                               },
-                                               Cancel: function() {
-                                                   $.get('/homepage/notSaveGalleryForId', function() {});
-                                                   $(".qq-upload-list").text(" ");
-                                                   $( this ).dialog( "close" );
-                                               }
-                                           }
-                                           });
-                                      $( "#file-uploader-demo1" ).dialog("open");
-                                });
-                                $("#frmtaskForm-create").click(function(){
-                                    $("body").addClass("loading");
-                                    $.ajax({
-                                            async : false,
-                                            type: 'POST',
-                                            url: "/homepage/saveArticle",
-                                            data : { 
-                                                    "article_id" : $("#hidden_id").text(), 
-                                                    "title_cz" : $("#frmtaskForm-title_cz").val(), 
-                                                    "title_en" : $("#frmtaskForm-title_en").val(),
-                                                    "text_cz" : $("#frmtaskForm-text_cz").val(),
-                                                    "text_en" : $("#frmtaskForm-text_en").val()
-                                            },
-                                            success : function (r) {
-                                                    location.reload();
-                                            }, 
-                                            complete : function (r) {
-                                                $("body").removeClass("loading");
-                                            }
-                                    });
-                                });
-                                
-
-
-            </script>
-           
         </div>
-        <div id="dialog-confirm" title="Odstranit položku?" style="visibility: hidden">
-            <p ><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0; "></span>Tímto trvale odstraníte stránku z menu i jejím obsahem!</p>
-        </div>
-        <div id="file-uploader-demo1" style="visibility: hidden" title="Nahrávání fotografií">		
-            <noscript>			
-            <p>Pro nahrávání fotografií je potřeba zapnout JavaScript.</p>
-
-            </noscript>         
-        </div>
+        {include #content}
         <span id="hidden_id" style="display: none"></span>
          <div class="modal"><!-- Place at bottom of page --></div>
     </body>

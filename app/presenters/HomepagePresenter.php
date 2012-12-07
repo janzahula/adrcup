@@ -1,8 +1,8 @@
 <?php
 
-use Nette\Application\UI\Form;
+use \Nette\Application\UI\Form;
 
-
+namespace AdminModule;
 
 /**
  * Homepage presenter.
@@ -12,7 +12,7 @@ class HomepagePresenter extends BasePresenter {
     private $article;
     private $galerie;
 
-    public function inject(Adrenalincup\Article $article, Adrenalincup\Galerie $galerie) {
+    public function inject(\Adrenalincup\Article $article, \Adrenalincup\Galerie $galerie) {
         $this->article = $article;
         $this->galerie = $galerie;
     }
@@ -104,11 +104,12 @@ class HomepagePresenter extends BasePresenter {
 
 
     public function renderDefault() {
+        
         $this->template->anyVariable = 'any value';
     }
 
     protected function createComponentTaskForm() {
-        $form = new Form();
+        $form = new \Nette\Application\UI\Form();
         $form->addText('title_cz', "Nadpis sekce");
         $form->addTextArea('text_cz', '')
         ->controlPrototype->addClass('ckedit');

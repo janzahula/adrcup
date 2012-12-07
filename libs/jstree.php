@@ -1,5 +1,5 @@
 <?php
-
+ 
 // Database config & class
 //if(extension_loaded("mysqli")) require_once("jstree/class._database_i.php"); 
 //else require_once("jstree/class._database.php"); 
@@ -35,7 +35,7 @@ class _database {
     }
 
     function connect() {
-        $this->data = new mysqli(
+        $this->data = new  mysqli(
                         $this->settings["servername"],
                         $this->settings["username"],
                         $this->settings["password"],
