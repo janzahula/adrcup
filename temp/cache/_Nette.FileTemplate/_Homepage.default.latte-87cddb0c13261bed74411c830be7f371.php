@@ -1,16 +1,16 @@
-<?php //netteCache[01]000402a:2:{s:4:"time";s:21:"0.27876500 1354898299";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:80:"/Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/Homepage/default.latte";i:2;i:1354898204;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"f8aa369 released on 2012-08-30";}}}?><?php
+<?php //netteCache[01]000402a:2:{s:4:"time";s:21:"0.49756500 1357809453";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:80:"/Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/Homepage/default.latte";i:2;i:1354898204;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"f8aa369 released on 2012-08-30";}}}?><?php
 
 // source file: /Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/Homepage/default.latte
 
 ?><?php
 // prolog Nette\Latte\Macros\CoreMacros
-list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 'c1qcklosnu')
+list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 's7zs8oq6i2')
 ;
 // prolog Nette\Latte\Macros\UIMacros
 //
 // block content
 //
-if (!function_exists($_l->blocks['content'][] = '_lb1658b3a751_content')) { function _lb1658b3a751_content($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['content'][] = '_lb49023bc6f2_content')) { function _lb49023bc6f2_content($_l, $_args) { extract($_args)
 ?><div id="demo_body">
 <?php $iterations = 0; foreach ($flashes as $flash): ?>    <div class="flash <?php echo htmlSpecialChars($flash->type) ?>
 "><?php echo Nette\Templating\Helpers::escapeHtml($flash->message, ENT_NOQUOTES) ?></div>

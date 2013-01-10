@@ -1,4 +1,4 @@
-body {
+/*body {
 	font: 16px/1.5 Georgia, serif;
 	color: #333;
 	background-color: #fff;
@@ -32,4 +32,50 @@ div.flash {
 a[href^="error:"] {
 	background: red;
 	color: white;
+}*/
+body{
+    background-color: black;
+}
+html{
+    background-color: black;
+}
+#banner{
+     width: 100%;   
+     z-index: 1;
+     height: 390px;
+      margin-top: -75px;
+}
+#dhead{
+    background-image: url("/images/body-top-bg.png");
+    background-repeat: repeat-x;
+   
+    z-index: 3;
+}
+#container{
+    
+    z-index: 3;
+    
+    
+   
+    
+}
+#button-prew, #button-next{
+     position: absolute;
+width: 107px;
+height: 107px;
+top: 223px;
+display: block;
+outline: none;
+cursor: pointer;
+ 
+    
+}
+#button-next{
+    right: -50px;
+}
+#button-prew{
+    left: -50px;
+}
+#main-menu{
+    
 }

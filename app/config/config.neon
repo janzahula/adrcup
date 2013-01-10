@@ -31,7 +31,8 @@ common:
 		baseModel: Adrenalincup\Base
 		article: Adrenalincup\Article
 		galerie: Adrenalincup\Galerie
-
+		registration: Adrenalincup\Registration
+		tree: Adrenalincup\Tree
 
 	factories:
 

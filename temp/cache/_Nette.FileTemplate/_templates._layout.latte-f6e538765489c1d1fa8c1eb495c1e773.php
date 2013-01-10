@@ -1,23 +1,23 @@
-<?php //netteCache[01]000393a:2:{s:4:"time";s:21:"0.31617600 1354904346";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:71:"/Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/@layout.latte";i:2;i:1354904341;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"f8aa369 released on 2012-08-30";}}}?><?php
+<?php //netteCache[01]000393a:2:{s:4:"time";s:21:"0.54280000 1357809453";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:71:"/Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/@layout.latte";i:2;i:1355824563;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"f8aa369 released on 2012-08-30";}}}?><?php
 
 // source file: /Users/jan/WEB/Nette-CKEditor-master/adrcup/app/templates/@layout.latte
 
 ?><?php
 // prolog Nette\Latte\Macros\CoreMacros
-list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 'iqmw35q3hj')
+list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 't2gg7b32gj')
 ;
 // prolog Nette\Latte\Macros\UIMacros
 //
 // block title
 //
-if (!function_exists($_l->blocks['title'][] = '_lb5b1c0586f4_title')) { function _lb5b1c0586f4_title($_l, $_args) { extract($_args)
-?>Nette Application Skeleton<?php
+if (!function_exists($_l->blocks['title'][] = '_lbd64a4ab4d3_title')) { function _lbd64a4ab4d3_title($_l, $_args) { extract($_args)
+?>Adrenalincup<?php
 }}
 
 //
 // block head
 //
-if (!function_exists($_l->blocks['head'][] = '_lba9145a7a0c_head')) { function _lba9145a7a0c_head($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['head'][] = '_lb92dae4f834_head')) { function _lb92dae4f834_head($_l, $_args) { extract($_args)
 ;
 }}
 
@@ -46,12 +46,12 @@ if ($_l->extends) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <meta name="description" content="Nette Framework web application skeleton" />
+        <meta name="description" content="Adrenalincup" />
 <?php if (isset($robots)): ?>        <meta name="robots" content="<?php echo htmlSpecialChars($robots) ?>" />
 <?php endif ?>
 
         <title><?php if ($_l->extends) { ob_end_clean(); return Nette\Latte\Macros\CoreMacros::includeTemplate($_l->extends, get_defined_vars(), $template)->render(); }
-ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars()); echo $template->upper($template->striptags(ob_get_clean()))  ?></title>
+ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars()); echo $template->striptags(ob_get_clean())  ?></title>
 
         <link rel="stylesheet" media="screen,projection,tv" href="<?php echo htmlSpecialChars($basePath) ?>/css/screen.css" type="text/css" />
         <link rel="stylesheet" media="print" href="<?php echo htmlSpecialChars($basePath) ?>/css/print.css" type="text/css" />
@@ -70,6 +70,8 @@ ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars())
         <script type="text/javascript" src="<?php echo htmlSpecialChars($basePath) ?>/js/jstree/jquery.jstree.js"></script>
         <script type="text/javascript" src="<?php echo htmlSpecialChars($basePath) ?>/js/jquery-ui-min.js"></script>
         <script type="text/javascript" src="<?php echo htmlSpecialChars($basePath) ?>/js/jquery.zclip.min.js"></script>
+<script src="<?php echo htmlSpecialChars($basePath) ?>/js/lightbox.js"></script>
+<link href="<?php echo htmlSpecialChars($basePath) ?>/css/lightbox.css" rel="stylesheet" />
 
         <link type="text/css" rel="stylesheet" href="<?php echo htmlSpecialChars($basePath) ?>/css/jstree/syntax/!style.css" />
         <link type="text/css" rel="stylesheet" href="<?php echo htmlSpecialChars($basePath) ?>/css/jstree/!style.css" />
@@ -99,7 +101,7 @@ ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars())
                      $("#photos-to-upload")                      
                      .append('<div class="image_wrapper" id="wrapper_'+data.photos[i]+'">\n\
                                 <div id="copy_'+data.photos[i]+'">\n\
-                                    <img src=/images/galerie/'+id+'/140'+data.photos[i]+' class="pic" id="pic_'+i+'"/>\n\
+                                    <a href=/images/galerie/'+id+'/800'+data.photos[i]+' rel=lightbox[roadtrip]><img src=/images/galerie/'+id+'/140'+data.photos[i]+' class="pic" id="pic_'+i+'" /></a>\n\
                                 </div>\n\
                                 <div class="transbox" id="transbox_'+i+'">\n\
                                 <a href="#"  title="Odstranit">\n\
@@ -139,7 +141,7 @@ ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars())
                                   $.ajax({
                                             async : false,
                                             type: 'POST',
-                                            url: '/administrace/json/deleteImage',
+                                            url: '/json/deleteImage',
                                             data : { 
                                                     "image_id" : id
                                                     }, 
@@ -185,10 +187,17 @@ ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars())
         }            
         $(document).ready(function() {
             $("#frmform-odeslat").attr("disabled", "disabled");
-            $(".menu-item").each(function() {   
- 
-                if (this.href == window.location.href) {
-                    
+            
+            $(".menu-item").each(function(index) {   
+                var longhref = window.location.href;
+                
+                if(longhref.indexOf(this.href) >= 0){
+                    //alert("hura");
+                }
+                if(longhref.indexOf(this.href) >= 0){
+                    $(".menu-item").each(function() {
+                        $(this).parent().attr("id", "");
+                    });
                     $(this).parent().attr("id", "selected");
                 }
             });

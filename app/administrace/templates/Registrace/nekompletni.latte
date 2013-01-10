@@ -1,0 +1,101 @@
+{block content}
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+
+<div id="container" class="my-shadow">
+    <a n:href="Registrace:kompletni" style="text-decoration: none; display: inline-block"><input type="button" value="Kompletní" class="button edit" /></a>
+    <a n:href="Registrace:nekompletni" style="text-decoration: none; display: inline-block"><input type="button" value="Nekompletní" class="button edit" /></a>
+    <a n:href="Registrace:hledam" style="text-decoration: none; display: inline-block"><input type="button" value="Jednotlivec" class="button edit" /></a>
+    <hr />
+
+    
+    <table id="reg_table">
+            <thead>
+                <tr>
+                    <th>Tým</th>
+                    <th>Kontakt</th>
+                    <th>Adresa</th>
+                    <th>Kat.</th>
+                    <th>Běh</th>
+                    <th>Paraglide</th>
+                    <th>MTB</th>
+                    <th>Kajak</th>
+                    <th>Výkonnost</th>
+                    <th>Úpravy</th>
+                </tr>
+            </thead>
+{foreach $registrace as $r}
+            <tr>
+                <td>
+                    <table class="inner_table">
+                        <tr>
+                            <td>Název:</td>
+                            <td>{$r->name}</td>
+                        </tr>
+
+
+                        <tr>
+                            <td>Stát:</td>
+                            <td>{$r->country}</td>
+                        </tr>
+                                                <tr>
+                            <td>Info:</td>
+                            <td>{$r->note}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table class="inner_table">
+                        <tr>
+                            <td>Jméno:</td>
+                            <td>{$r->registrator_name} {$r->registrator_surname}</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>{$r->email}</td>
+                        </tr>
+                        <tr>
+                            <td>Telefon:</td>
+                            <td>{$r->phone}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table class="inner_table">
+
+                        <tr>
+                            <td>Ulice:</td>
+                            <td>{$r->street}</td>
+                        </tr>
+                        <tr>
+                            <td>Město:</td>
+                            <td>{$r->city}</td>
+                        </tr>
+                        <tr>
+                            <td>PSČ:</td>
+                            <td>{$r->zip}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    {if $r->gender == 'm'}
+                    <img src="/images/men.gif" />
+                    {/if}
+                    {if $r->gender == 'f'}
+                    <img src="/images/women.gif" />
+                    {/if}
+                </td>
+                <td>{if $r->run != ''}{$r->run}{else}<img src="/images/run.gif">{/if}</td>
+                <td>{if $r->paraglide != ''}{$r->paraglide}{else}<img src="/images/paraglide.gif">{/if}</td>
+                <td>{if $r->mtb != ''}{$r->mtb}{else}<img src="/images/mtb.gif">{/if}</td>
+                <td>{if $r->kayak != ''}{$r->kayak}{else}<img src="/images/kayak.gif">{/if}</td>
+                <td>
+                    {$r->my_performance}
+                </td>
+                <td>
+                    <input type="button" value="Editovat" class="button edit" style="width: 80px" id="edit_registration_{$r->id}"/>
+                    <input type="button" value="Odstranit" class="button delete" style="width: 80px" id="delete_registration_{$r->id}"/>
+                </td>
+            </tr>
+{/foreach}
+        </table>
+    </div>

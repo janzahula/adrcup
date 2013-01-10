@@ -117,7 +117,7 @@ ul.jstree li a { color:#3B5998; text-decoration:underline; }
     background: #d20238;
 }
 .save{
-    width: 300px;
+    width: 220px;
     padding: 10px 15px;
     float: right;
     font-size: 15px;
@@ -198,14 +198,14 @@ img.pic{
     width: 1050px;
     text-align: left;
     margin: 0px auto;
-
+    font:  Verdana, Arial, Helvetica, sans-serif
 }
 #main-header{
     position: relative;
     float: right;
     font-size: 10pt;
     margin-top: -10px;
-     top: 14px;
+    top: 14px;
 }
 #main-header input{
     position: relative;
@@ -232,7 +232,7 @@ img.pic{
     margin-bottom: -22px;
 
 }
- 
+
 #selected{
     background-image: url('../../images/bg-menu-hover.png');
     background-position-x: center; 
@@ -291,3 +291,22 @@ input:focus, textarea:focus {
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
 }
 
+#reg_table{
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.inner_table{
+    width: 180px;
+    text-align: left;
+}
+.inner_table tr td:first-child{
+    font-weight: bold;
+}
+#reg_table th{
+
+    border-bottom: solid 2px red;
+}
+#reg_table  td{
+    padding: 3px 3px;
+}
